@@ -1,8 +1,8 @@
 """Load MIS graphs."""
 
 import os
-from discs.common import utils
-from discs.graph_loader import common as data_common
+from ReSCO.common import utils
+from ReSCO.graph_loader import common as data_common
 import jax.numpy as jnp
 import networkx as nx
 import numpy as np

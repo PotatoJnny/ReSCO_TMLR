@@ -5,7 +5,7 @@ from setuptools import setup
 
 
 setup(
-    name='discs',
+    name='ReSCO',
     packages=find_namespace_packages(),
     install_requires=[
         'ml_collections',

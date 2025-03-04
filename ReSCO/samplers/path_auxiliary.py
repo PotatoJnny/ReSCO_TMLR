@@ -1,7 +1,7 @@
 """Path auxiliary sampler."""
 
-from discs.common import math_util as math
-from discs.samplers import locallybalanced
+from ReSCO.common import math_util as math
+from ReSCO.samplers import locallybalanced
 import jax
 import jax.numpy as jnp
 from jax.scipy import special

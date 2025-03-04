@@ -7,7 +7,7 @@ import json
 from absl import logging
 from clu import metric_writers
 from clu.metric_writers.summary_writer import SummaryWriter
-from discs.graph_loader import graph_gen
+from ReSCO.graph_loader import graph_gen
 import flax
 import jax
 import jax.numpy as jnp

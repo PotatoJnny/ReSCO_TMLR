@@ -1,8 +1,8 @@
 """Main class that runs sampler on the model to generate chains."""
 import functools
 import time
-from discs.common import math_util as math
-from discs.common import utils
+from ReSCO.common import math_util as math
+from ReSCO.common import utils
 import flax
 import jax
 import jax.numpy as jnp

@@ -1,6 +1,6 @@
 """Categorical Factorized Energy Function."""
 
-from discs.models import abstractmodel
+from ReSCO.models import abstractmodel
 import jax
 import jax.numpy as jnp
 import ml_collections

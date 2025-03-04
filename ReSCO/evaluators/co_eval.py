@@ -1,6 +1,6 @@
 """Combinotorial Optimization Evaluator Class."""
 
-from discs.evaluators import abstractevaluator
+from ReSCO.evaluators import abstractevaluator
 
 
 class COevaluator(abstractevaluator.AbstractEvaluator):

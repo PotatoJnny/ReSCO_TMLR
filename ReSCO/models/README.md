@@ -30,10 +30,10 @@ The config passed to the model for instantiation should have the following struc
   )
 ```
 We provide the code snippet below as an example of how to instantiate the maxcut model for the purpose of using out of this package pipeline.
-Also, to see an example of how the `ml_collections` is used to set up the configs when running a script, you can refer to `discs/experiment/run_sampling_local.sh' and `discs/experiment/main_sampling.py' with `config_flags.DEFINE_config_file` use-case.
+Also, to see an example of how the `ml_collections` is used to set up the configs when running a script, you can refer to `ReSCO/experiment/run_sampling_local.sh' and `ReSCO/experiment/main_sampling.py' with `config_flags.DEFINE_config_file` use-case.
 ```
 import importlib
-from discs.models.configs import maxcut_config
+from ReSCO.models.configs import maxcut_config
 from ml_collections import config_dict
 from ml_collections import config_flags
 
@@ -54,7 +54,7 @@ def get_model_config():
   # graph type used in case of CO
   if config.model.get('graph_type', None):
     graph_config = importlib.import_module(
-        'discs.models.configs.%s.%s'
+        'ReSCO.models.configs.%s.%s'
         % (config.model.name, config.model.graph_type)
     )
     config.model.update(graph_config.get_model_config(config.model.cfg_str))
@@ -64,7 +64,7 @@ def get_model_config():
 # config
 config = get_model_config()
 # model
-model_mod = importlib.import_module('discs.models.%s' % config.model.name)
+model_mod = importlib.import_module('ReSCO.models.%s' % config.model.name)
 model = model_mod.build_model(config)
 ```
 

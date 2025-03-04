@@ -4,7 +4,7 @@ import csv
 import os
 import pdb
 import pickle
-from discs.evaluators import bernoulli_eval as b_eval
+from ReSCO.evaluators import bernoulli_eval as b_eval
 from matplotlib import cm
 import jax.numpy as jnp
 import matplotlib.pyplot as plt
@@ -48,7 +48,6 @@ class Saver:
     plt.savefig(path)
     plt.close()
 
-  def _save_ess_results(self, metrcis, running_time):
     """Saving the Evaluation Results in txt and CSV file."""
 
     results = {}

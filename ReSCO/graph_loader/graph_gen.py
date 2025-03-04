@@ -1,10 +1,10 @@
 """Graph generator."""
 
 import os
-from discs.graph_loader import maxcut_loader
-from discs.graph_loader import mis_loader
-from discs.graph_loader import maxclique_loader
-from discs.graph_loader import normcut_loader
+from ReSCO.graph_loader import maxcut_loader
+from ReSCO.graph_loader import mis_loader
+from ReSCO.graph_loader import maxclique_loader
+from ReSCO.graph_loader import normcut_loader
 
 def get_graphs(config):
   """Get graph loader."""

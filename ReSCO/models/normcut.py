@@ -1,6 +1,6 @@
 """Normalized cut model."""
 
-from discs.models import comb_ebm
+from ReSCO.models import comb_ebm
 import jax
 import jax.numpy as jnp
 import ml_collections

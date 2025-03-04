@@ -1,8 +1,8 @@
 """Gibbs with gradient."""
 
 import pdb
-from discs.common import math_util as math
-from discs.samplers import locallybalanced
+from ReSCO.common import math_util as math
+from ReSCO.samplers import locallybalanced
 import jax
 import jax.numpy as jnp
 import ml_collections

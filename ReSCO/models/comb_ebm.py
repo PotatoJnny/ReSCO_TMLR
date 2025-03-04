@@ -1,7 +1,7 @@
 """EBM for combinatorial optimization problems."""
 
-from discs.common.utils import get_datagen
-from discs.models import abstractmodel
+from ReSCO.common.utils import get_datagen
+from ReSCO.models import abstractmodel
 import jax
 import jax.numpy as jnp
 import ml_collections

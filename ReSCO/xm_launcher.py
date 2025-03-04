@@ -24,7 +24,7 @@ config_flags.DEFINE_config_file(
 )
 flags.DEFINE_string(
     'save_folder_pattern',
-    '/gcs/xcloud-shared/{user}/results/discs/{exp_name}_{exp_id}',
+    '/gcs/xcloud-shared/{user}/results/ReSCO/{exp_name}_{exp_id}',
     'save folder pattern',
 )
 
@@ -60,15 +60,15 @@ def main(argv) -> None:
   executable_args = {}
   # setting model, sampler and experiment config
   executable_args['model_config'] = (
-      f'/workdir/discs/models/configs/{job_config.model}_config.py'
+      f'/workdir/ReSCO/models/configs/{job_config.model}_config.py'
   )
   executable_args['sampler_config'] = (
-      f'/workdir/discs/samplers/configs/{job_config.sampler}_config.py'
+      f'/workdir/ReSCO/samplers/configs/{job_config.sampler}_config.py'
   )
   # co problems
   if job_config.get('graph_type', None):
     executable_args['config'] = (
-        f'/workdir/discs/experiment/configs/{job_config.model}/{job_config.graph_type}.py'
+        f'/workdir/ReSCO/experiment/configs/{job_config.model}/{job_config.graph_type}.py'
     )
     executable_args['model_config.graph_type'] = f'{job_config.graph_type}'
     executable_args['model_config.data_root'] = (
@@ -77,10 +77,10 @@ def main(argv) -> None:
   # language model
   elif job_config.get('model') == 'text_infilling':
     executable_args['config'] = (
-        '/workdir/discs/experiment/configs/lm_experiment.py'
+        '/workdir/ReSCO/experiment/configs/lm_experiment.py'
     )
   else:
-    executable_args['config'] = '/workdir/discs/common/configs.py'
+    executable_args['config'] = '/workdir/ReSCO/common/configs.py'
     num_gpus = 4
 
   if (
@@ -101,7 +101,7 @@ def main(argv) -> None:
       else xm_abc.create_experiment
   )
   exp_name = config_flags.get_config_filename(FLAGS['config']).split('/')
-  exp_name = 'discs-' + exp_name[-2] + '-' + exp_name[-1][0:-3]
+  exp_name = 'ReSCO-' + exp_name[-2] + '-' + exp_name[-1][0:-3]
   with create_experiment(experiment_title=exp_name) as experiment:
     priority = xm.ServiceTier.BATCH if _USE_BATCH.value else xm.ServiceTier.PROD
     job_requirements = xm.JobRequirements(
@@ -123,7 +123,7 @@ def main(argv) -> None:
         user=uname, exp_name=exp_name, exp_id=experiment.experiment_id
     )
     executable_args['config.experiment.save_root'] = save_dir
-    module = 'discs.experiment.main_sampling'
+    module = 'ReSCO.experiment.main_sampling'
     (executable,) = experiment.package(
         [
             xm.python_container(
@@ -144,7 +144,7 @@ def main(argv) -> None:
       args.update(kwargs)
       if 'sampler_config.name' in args.keys():
         args['sampler_config'] = (
-            f'/workdir/discs/samplers/configs/{args["sampler_config.name"]}_config.py'
+            f'/workdir/ReSCO/samplers/configs/{args["sampler_config.name"]}_config.py'
         )
 
       sweep_str_parts = []

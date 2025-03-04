@@ -1,6 +1,6 @@
 """Config for er-test dataset."""
 
-from discs.common import utils
+from ReSCO.common import utils
 from ml_collections import config_dict
 
 

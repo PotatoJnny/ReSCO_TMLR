@@ -10,4 +10,4 @@ For each type of model, its corresponding metrics are defined by extending the `
 # How to add new evaluation metrics
 To add new evaluation methods, extend the `AbstractEvaluator` class defined in `abstractevaluator.py` by overriding the `evaluate` method (`${method_name}.py`).
 To enable the evaluaiton of the generated samples using your metric, you need to update the experiments's `evaluator` config value with `method_name`.
-The default value used for the evaluation is `ess_eval` defined in `discs/common/configs.py` which is updated by `co_eval` in the case of combinotorial optimization (defined under `discs/experiment/configs/co_experiment.py`) and by `lm_eval` in the case of text_infilling task (defined under `discs/experiment/configs/lm_experiment.py`).
+The default value used for the evaluation is `ess_eval` defined in `ReSCO/common/configs.py` which is updated by `co_eval` in the case of combinotorial optimization (defined under `ReSCO/experiment/configs/co_experiment.py`) and by `lm_eval` in the case of text_infilling task (defined under `ReSCO/experiment/configs/lm_experiment.py`).

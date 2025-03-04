@@ -12,10 +12,10 @@ required config values in the model's corresponding training run script and run
 the script
 
 As an example, in the case of RBM, set your desired training parameters in
-`./discs/learning/rbm/run_rbm_training.sh` and then run
+`./ReSCO/learning/rbm/run_rbm_training.sh` and then run
 
 ```
-./discs/learning/rbm/run_rbm_training.sh
+./ReSCO/learning/rbm/run_rbm_training.sh
 ```
 
 Once the training is done, you should be able to locate two files of
@@ -25,14 +25,14 @@ above.
 ## Sampling
 
 Update `data_path` value with the trained model saved directory in the
-correspinding model config file located at `./discs/models/configs/`. As an
+correspinding model config file located at `./ReSCO/models/configs/`. As an
 example in the case of RBM, set the `data_path` in
-`./discs/models/configs/rbm_config.py` with the location where the `params.pkl`
+`./ReSCO/models/configs/rbm_config.py` with the location where the `params.pkl`
 and `config.yaml` files were dumped from the learning step.
 
 Under the root folder, you can run the following to start the sampling from the
 learned RBM model:
 
 ```
-model=rbm sampler=randomwalk ./discs/experiments/run_sampling_local.sh
+model=rbm sampler=randomwalk ./ReSCO/experiments/run_sampling_local.sh
 ```

@@ -10,22 +10,22 @@ echo "$graph_type"
 
 if [ "$graph_type" == "$default" ]
 then
-   exp_config="discs/common/configs.py"
+   exp_config="ReSCO/common/configs.py"
 else
-   exp_config="discs/experiment/configs/${model?}/${graph_type:-$default}.py" 
+   exp_config="ReSCO/experiment/configs/${model?}/${graph_type:-$default}.py" 
 fi
 
 if [ "$model" == "text_infilling" ]
 then
-   exp_config="discs/experiment/configs/lm_experiment.py"
+   exp_config="ReSCO/experiment/configs/lm_experiment.py"
 fi
 
 echo $exp_config
 
 
-python -m discs.experiment.main_sampling \
-  --model_config="discs/models/configs/${model?}_config.py" \
-  --sampler_config="discs/samplers/configs/${sampler?}_config.py" \
+python -m ReSCO.experiment.main_sampling \
+  --model_config="ReSCO/models/configs/${model?}_config.py" \
+  --sampler_config="ReSCO/samplers/configs/${sampler?}_config.py" \
   --config=$exp_config \
   --run_local=True \
 

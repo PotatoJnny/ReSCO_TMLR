@@ -14,7 +14,7 @@ import csv
 flags.DEFINE_string('graph_file', '../sco/nets/VGG.pkl', 'dir to graph')
 flags.DEFINE_string(
     'gcs_results_path',
-    '../discs/results/normcut',
+    '../ReSCO/results/normcut',
     'where results are being saved',
 )
 FLAGS = flags.FLAGS
@@ -203,7 +203,7 @@ def main(argv) -> None:
     res.append(new_res)
   
   f_name = str.split(FLAGS.gcs_results_path,'/')[-1]
-  file_path = os.path.join('./discs/common/normcut_csv/', f_name)
+  file_path = os.path.join('./ReSCO/normcut_csv/', f_name)
   if not os.path.exists(file_path):
     os.makedirs(file_path)
   with open(file_path+'/res.csv', 'w', newline='') as file:

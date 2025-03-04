@@ -2,8 +2,8 @@
 
 import copy
 from itertools import product
-from discs.common import math_util as math
-from discs.samplers import abstractsampler
+from ReSCO.common import math_util as math
+from ReSCO.samplers import abstractsampler
 import jax
 from jax import random
 import jax.numpy as jnp

@@ -1,9 +1,9 @@
 """Locally Balanced Informed Sampler Class."""
 
 import enum
-from discs.common import math_util as math
-from discs.common import utils
-from discs.samplers import abstractsampler
+from ReSCO.common import math_util as math
+from ReSCO.common import utils
+from ReSCO.samplers import abstractsampler
 import jax
 import jax.numpy as jnp
 import ml_collections

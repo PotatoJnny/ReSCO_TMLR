@@ -1,6 +1,6 @@
 """Max Independent Set model."""
 
-from discs.models import comb_ebm
+from ReSCO.models import comb_ebm
 import jax.numpy as jnp
 import ml_collections
 
