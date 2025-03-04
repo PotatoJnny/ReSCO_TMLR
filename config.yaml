@@ -1,0 +1,67 @@
+!!python/object:ml_collections.config_dict.config_dict.ConfigDict
+_convert_dict: true
+_fields:
+  experiment: !!python/object:ml_collections.config_dict.config_dict.ConfigDict
+    _convert_dict: true
+    _fields:
+      batch_size: 1
+      chain_length: 800000
+      co_opt_prob: true
+      decay_rate: 0.01
+      ess_ratio: 0.5
+      evaluator: co_eval
+      fig_folder: logs/figures
+      final_temperature: 1.0e-07
+      get_additional_metrics: false
+      get_estimation_error: false
+      init_temperature: 2
+      log_every_steps: 1
+      name: CO_Experiment
+      num_models: 1
+      plot_every_steps: 10
+      run_parallel: true
+      save_every_steps: 100
+      save_root: ''
+      save_samples: false
+      shuffle_buffer_size: 0
+      t_schedule: exp_decay
+      use_tqdm: false
+      window_size: 10
+      window_stride: 10
+    _locked: false
+    _type_safe: true
+  model: !!python/object:ml_collections.config_dict.config_dict.ConfigDict
+    _convert_dict: true
+    _fields:
+      cfg_str: r-ALEXNET
+      data_root: ./sco/
+      graph_type: nets
+      max_num_edges: 0
+      max_num_nodes: 0
+      name: normcut
+      num_categories: 3
+      num_instances: 0
+      num_models: 1
+      penalty: 0.0005
+      rand_type: ALEXNET
+      save_dir_name: normcut
+      shape: !!python/tuple
+      - 0
+      stype: quad
+      tolerance: 0.03
+    _locked: false
+    _type_safe: true
+  sampler: !!python/object:ml_collections.config_dict.config_dict.ConfigDict
+    _convert_dict: true
+    _fields:
+      adaptive: true
+      approx_with_grad: true
+      balancing_fn_type: SQRT
+      name: path_auxiliary
+      num_flips: 1
+      target_acceptance_rate: 0.574
+      use_fast_path: true
+    _locked: false
+    _type_safe: true
+_locked: false
+_type_safe: true
