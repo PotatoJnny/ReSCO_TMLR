@@ -284,6 +284,7 @@ class CO_Experiment(Experiment):
 
 
     if reheat:
+      shape = (self.config.num_models, self.config.batch_size)
       fake_step = jnp.ones(shape, dtype=jnp.int32)
       max_specific_heat = jnp.zeros(shape, dtype=jnp.float32)
       reheat_step = jnp.zeros(shape, dtype=jnp.int32)
@@ -292,7 +293,6 @@ class CO_Experiment(Experiment):
       wandering_length = 1000
       threshold = 0.5
       reheat_time = jnp.zeros((self.config.num_models,self.config.batch_size))
-      shape = (self.config.num_models, self.config.batch_size)
       trapped_num = jnp.zeros(shape, dtype=jnp.int32)
       trapped_threshold_length = jnp.ones(shape, dtype=jnp.int32) * wandering_length
       old_value = jnp.zeros(shape, dtype=jnp.float32)
