@@ -134,13 +134,15 @@ class Saver:
           )
           plt.imsave(image_path, np.array(img), cmap=cm.gray)
 
-  def save_co_resuts(self, trajectory, best_ratio, running_time, best_samples):
+  def save_co_resuts(self, trajectory, best_value, best_ratio, running_time, best_samples):
     if not os.path.isdir(self.save_dir):
       os.makedirs(self.save_dir)
     path = os.path.join(self.save_dir, 'results.pkl')
     results = {}
     results['trajectory'] = np.array(trajectory)
+    results['best_value'] = np.array(best_value)
     results['best_ratio'] = np.array(best_ratio)
+    results['best_value_mean'] = np.mean(np.array(best_value))
     results['best_ratio_mean'] = np.mean(np.array(best_ratio))
     results['running_time'] = running_time
     if len(best_samples) != 0:

@@ -456,60 +456,14 @@ class CO_Experiment(Experiment):
         fake_step = fake_step + jnp.ones_like(fake_step)
 
 
-
-    import csv
-    import os
-    import matplotlib.pyplot as plt
-
-    folder_name = 'Record Running Results'
-    if not os.path.exists(folder_name):
-      os.makedirs(folder_name)
-    # Define the CSV filename
-    csv_filename = 'record_value_chain.csv'
-
-    # Full path to the CSV file
-    csv_filepath = os.path.join(folder_name, csv_filename)
-
-    # Write the list to a CSV file
-    with open(csv_filepath, mode='w', newline='') as csv_file:
-        writer = csv.writer(csv_file)
-        # If you want each item on a separate row:
-        for value in record_value_chain:
-            writer.writerow([value])
-
-     
-    csv_filename = 'record_temp_chain.csv'
-
-    # Full path to the CSV file
-    csv_filepath = os.path.join(folder_name, csv_filename)
-
-    # Write the list to a CSV file
-    with open(csv_filepath, mode='w', newline='') as csv_file:
-         writer = csv.writer(csv_file)
-         # If you want each item on a separate row:
-         for value in record_temp_chain:
-            writer.writerow([value])
-    
-
     best_value = jnp.max(best_eval_val, axis=-1).reshape(-1)
-    std_value = jnp.std(best_eval_val, axis=-1).reshape(-1)
     sample_mask = sample_mask.reshape(best_value.shape)
     best_value = best_value[sample_mask]
     best_ratio = best_value / self.ref_obj[sample_mask]
-    std_value = std_value[sample_mask]
-    print('running time: ', running_time)
-    print('mean best ratio: ', jnp.mean(best_ratio))
-    print('mean best value: ', jnp.mean(best_value))
-    print('std', jnp.mean(std_value))
-    print('reheat time: ', jnp.sum(reheat_time))
-    #raise ValueError('stop here')
-
-
-    #TODO: consider add best value also into saver
     if not (self.config.save_samples or self.config_model.name == 'normcut'):
       best_samples = []
     saver.save_co_resuts(
-        chain, best_ratio[sample_mask], running_time, best_samples
+        chain, best_value[sample_mask], best_ratio[sample_mask], running_time, best_samples
     )
 
 
