@@ -141,15 +141,13 @@ class Saver:
     results = {}
     results['trajectory'] = np.array(trajectory)
     results['best_ratio'] = np.array(best_ratio)
+    results['best_ratio_mean'] = np.mean(np.array(best_ratio))
     results['running_time'] = running_time
     if len(best_samples) != 0:
       results['best_samples'] = np.array(best_samples)
     with open(path, 'wb') as file:
       pickle.dump(results, file, protocol=pickle.HIGHEST_PROTOCOL)
 
-    results = {}
-    results['best_ratio_mean'] = np.mean(np.array(best_ratio))
-    results['running_time'] = running_time
     with open(f'{self.save_dir}/results.csv', 'w') as csvfile:
       writer = csv.DictWriter(csvfile, fieldnames=list(results.keys()))
       writer.writeheader()
