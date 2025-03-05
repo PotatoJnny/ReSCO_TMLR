@@ -133,17 +133,15 @@ class Saver:
           )
           plt.imsave(image_path, np.array(img), cmap=cm.gray)
 
-  def save_co_resuts(self, trajectory, best_value, best_ratio, running_time, best_samples):
+  def save_co_resuts(self,  best_value, best_ratio, running_time, best_samples):
     if not os.path.isdir(self.save_dir):
       os.makedirs(self.save_dir)
     path = os.path.join(self.save_dir, 'results.pkl')
     results = {}
-    results['trajectory'] = np.array(trajectory)
     results['best_value'] = np.array(best_value)
     results['best_ratio'] = np.array(best_ratio)
     results['best_value_mean'] = np.mean(np.array(best_value))
     results['best_ratio_mean'] = np.mean(np.array(best_ratio))
-    results['running_time'] = running_time
     if len(best_samples) != 0:
       results['best_samples'] = np.array(best_samples)
     with open(path, 'wb') as file:
@@ -162,16 +160,6 @@ class Saver:
     with open(path, 'wb') as file:
       pickle.dump(params_dict, file, protocol=pickle.HIGHEST_PROTOCOL)
 
-  def save_lm_results(self, results, results_topk):
-    if not os.path.isdir(self.save_dir):
-      os.makedirs(self.save_dir)
-    path = os.path.join(self.save_dir, 'results.pkl')
-    with open(path, 'wb') as file:
-      pickle.dump(results, file, protocol=pickle.HIGHEST_PROTOCOL)
-    if results_topk:
-      path = os.path.join(self.save_dir, 'results_topk.pkl')
-      with open(path, 'wb') as file:
-        pickle.dump(results_topk, file, protocol=pickle.HIGHEST_PROTOCOL)
 
   def plot_estimation_error(self, model, params, samples):
     ber_eval = b_eval.build_evaluator(self.config)

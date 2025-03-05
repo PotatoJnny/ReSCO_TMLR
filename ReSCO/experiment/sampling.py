@@ -463,7 +463,7 @@ class CO_Experiment(Experiment):
     if not (self.config.save_samples or self.config_model.name == 'normcut'):
       best_samples = []
     saver.save_co_resuts(
-        chain, best_value[sample_mask], best_ratio[sample_mask], running_time, best_samples
+        best_value[sample_mask], best_ratio[sample_mask], running_time, best_samples
     )
 
 
