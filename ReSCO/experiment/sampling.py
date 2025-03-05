@@ -276,7 +276,7 @@ class CO_Experiment(Experiment):
 
     stp_burnin, _ , _, obj_fn, _ = compiled_fns
     fn_reshape = lambda x: jnp.reshape(x, bshape + x.shape[1:])
-    best_eval_val = jnp.ones((self.config.num_models,self.config.batch_size)) * -jnp.inf
+    best_eval_val = jnp.ones(self.config.num_models) * -jnp.inf
     burn_in_length = int(self.config.chain_length * self.config.ess_ratio) + 1
     value_chain = jnp.zeros((100, self.config.num_models, self.config.batch_size))
     reheat = True
@@ -289,8 +289,8 @@ class CO_Experiment(Experiment):
       max_specific_heat = jnp.zeros(shape, dtype=jnp.float32)
       reheat_step = jnp.zeros(shape, dtype=jnp.int32)
       print_specific_heat = False
-      skip_step = 200000
-      wandering_length = 1000
+      skip_step = 200
+      wandering_length = 100
       threshold = 0.5
       reheat_time = jnp.zeros((self.config.num_models,self.config.batch_size))
       trapped_num = jnp.zeros(shape, dtype=jnp.int32)
@@ -325,14 +325,11 @@ class CO_Experiment(Experiment):
 
         eval_val = obj_fn(samples=new_x, params=params) 
         eval_val = eval_val.reshape(self.config.num_models, -1)
-        is_better = eval_val > best_eval_val 
-        best_eval_val = jnp.maximum(eval_val, best_eval_val)
-        value_chain = value_chain.at[(step - 1) % 100].set(eval_val)
+        current_best_val = jnp.max(eval_val, axis=-1).reshape(-1)
+        is_better = current_best_val > best_eval_val 
+        best_eval_val = jnp.maximum(current_best_val, best_eval_val)
         sample_mask = sample_mask.reshape(best_eval_val.shape)
 
-        br = np.array(best_eval_val[sample_mask])
-        br = jax.device_put(br, jax.devices('cpu')[0])
-        chain.append(br)
 
 
 
@@ -354,9 +351,7 @@ class CO_Experiment(Experiment):
           best_samples = jnp.where(
             jnp.expand_dims(is_better, -1), chosen_samples, best_samples
           )
-          br = np.array(best_ratio[sample_mask])
-          br = jax.device_put(br, jax.devices('cpu')[0])
-          chain.append(br)
+
 
 
 
@@ -405,14 +400,12 @@ class CO_Experiment(Experiment):
       running_time += time.time() - start
 
 
-      eval_val = obj_fn(samples=new_x, params=params)
+      eval_val = obj_fn(samples=new_x, params=params) 
       eval_val = eval_val.reshape(self.config.num_models, -1)
-      is_better = eval_val > best_eval_val
-      best_eval_val = jnp.maximum(eval_val, best_eval_val)
+      current_best_val = jnp.max(eval_val, axis=-1).reshape(-1)
+      is_better = current_best_val > best_eval_val 
+      best_eval_val = jnp.maximum(current_best_val, best_eval_val)
       sample_mask = sample_mask.reshape(best_eval_val.shape)
-      br = np.array(best_eval_val[sample_mask])
-      br = jax.device_put(br, jax.devices('cpu')[0])
-      chain.append(br)
 
 
       if self.config.save_samples or self.config_model.name == 'normcut':
@@ -433,9 +426,7 @@ class CO_Experiment(Experiment):
         best_samples = jnp.where(
           jnp.expand_dims(is_better, -1), chosen_samples, best_samples
         )
-        br = np.array(best_ratio[sample_mask])
-        br = jax.device_put(br, jax.devices('cpu')[0])
-        chain.append(br)       
+
 
 
       if reheat:
@@ -456,9 +447,8 @@ class CO_Experiment(Experiment):
         fake_step = fake_step + jnp.ones_like(fake_step)
 
 
-    best_value = jnp.max(best_eval_val, axis=-1).reshape(-1)
-    sample_mask = sample_mask.reshape(best_value.shape)
-    best_value = best_value[sample_mask]
+
+    best_value = best_eval_val[sample_mask]
     best_ratio = best_value / self.ref_obj[sample_mask]
     if not (self.config.save_samples or self.config_model.name == 'normcut'):
       best_samples = []
